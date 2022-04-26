@@ -1,6 +1,6 @@
 # Python Challenge
 
-In the `py-measure` directory you will find the solution to the python challenge. It contains a package name timer which includes a Timer class that you can use to measure the executiong time of a function.
+In the `py-measure` directory you will find the solution to the python challenge. It contains a package named timer which includes a Timer class that you can use to measure the executiong time of a function.
 
 Usage:
 
