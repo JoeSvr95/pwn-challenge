@@ -1,8 +1,9 @@
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Any
 from .exceptions import TimerError
 
+PRECISION = 100000
 
 class Timer:
     def __init__(self):
@@ -14,6 +15,18 @@ class Timer:
 
         self.start_time = time.perf_counter()
 
+    def format_message(self, ms):
+        date = datetime.utcfromtimestamp(ms)
+
+        hours = f"{date.hour} hours" if date.hour else ""
+        minutes = f"{date.minute} minutes" if date.minute else ""
+        seconds = f"{date.second} seconds" if date.second else ""
+        
+        ms = int((date.timestamp() % 1) * PRECISION)
+        milliseonds = f"and {ms} milliseconds" if ms else ""
+
+        print(f"{hours} {minutes} {seconds} {milliseonds}".strip())
+
     def stop(self):
         if self.start_time is None:
             raise TimerError("Timer is not running. Use start() to start it.")
@@ -21,8 +34,4 @@ class Timer:
         elapsed_time = time.perf_counter() - self.start_time
         self.start_time = None
 
-        date = datetime.utcfromtimestamp(elapsed_time)
-        formated = datetime.strftime(
-            date, "%H hours %M minutes %S seconds %f miliseconds"
-        )
-        print(f"Elapsed time: {formated}")
+        self.format_message(elapsed_time)
